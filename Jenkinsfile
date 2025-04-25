@@ -46,7 +46,7 @@ pipeline{
         stage("Terraform Plan"){
             steps{
                 echo "========executing terraform plan========"
-                sh "terraform plan -var-file=env/${environment}.tfvars -out=tfplan"
+                sh "terraform plan -var-file=env/${environment}.tfvars -var-file=env/no-aws-profile.tfvars -out=tfplan"
             }           
         }   
         stage('Terraform Apply Approval') {
@@ -59,7 +59,7 @@ pipeline{
         stage("Terraform Apply"){
             steps{
                 echo "========executing terraform apply========"
-                sh "terraform apply -auto-approve tfplan"
+                sh "terraform apply -auto-approve -var-file=env/${environment}.tfvars -var-file=env/no-aws-profile.tfvars tfplan"
             }           
         }
     }

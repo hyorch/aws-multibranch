@@ -1,6 +1,6 @@
 provider "aws" {
-  profile = "HyorchAdmin" # AWS SSO Profile
-  region  = "eu-south-2"
+  profile = var.aws_profile
+  region  = var.aws_region
 }
 
 # backend s3
