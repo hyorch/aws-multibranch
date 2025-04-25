@@ -28,7 +28,7 @@ pipeline{
         stage("Terraform Init"){
             steps{
                 echo "========executing terraform init========"
-                sh "terraform init --backend-config=backend-$environment.tfvars"
+                sh "terraform init --backend-config=backend-${environment}.tfvars"
             }           
         }
         stage("Terraform Format"){
