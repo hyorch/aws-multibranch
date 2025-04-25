@@ -4,10 +4,10 @@ pipeline{
         label "jenkins"
     }
     stages{
-        stage("A"){
+        stage("Terraform Version"){
             steps{
                 echo "========executing terraform version========"
-                terraform version
+                sh "terraform version"
             }
             post{
                 always{
