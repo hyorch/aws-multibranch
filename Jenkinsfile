@@ -1,7 +1,7 @@
 // Execute Terraform Format
 pipeline{
     agent{
-        label "any"
+        label "jenkins"
     }
     stages{
         stage("A"){
