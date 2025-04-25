@@ -4,4 +4,4 @@ bucket = "hyorch-terraform"
 
 key = "aws-multibranch/dev/terraform.tfstate"
 
-profile = "" # No profile on Jenkins
+profile = "HyorchAdmin" # AWS SSO Profile
