@@ -49,10 +49,17 @@ pipeline{
                 sh "terraform plan -out=tfplan"
             }           
         }   
+        stage('Terraform Apply Approval') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                input(message: 'Do you want to apply Terraform changes?', ok: 'Proceed')
+                }
+            }
+        }
         stage("Terraform Apply"){
             steps{
                 echo "========executing terraform apply========"
-                //sh "terraform apply -auto-approve tfplan"
+                sh "terraform apply -auto-approve tfplan"
             }           
         }
     }
