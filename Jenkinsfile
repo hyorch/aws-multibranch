@@ -24,35 +24,36 @@ pipeline{
                 sh "terraform version"
             }           
         }
-    }
-    stage("Terraform Init"){
+    
+        stage("Terraform Init"){
             steps{
                 echo "========executing terraform init========"
                 sh "terraform init --backend-config=backend-$environment.tfvars"
             }           
         }
-    stage("Terraform Format"){
+        stage("Terraform Format"){
             steps{
                 echo "========executing terraform format========"
                 sh "terraform fmt -check"
             }           
         }
-    stage("Terraform Validate"){
+        stage("Terraform Validate"){
             steps{
                 echo "========executing terraform validate========"
                 sh "terraform validate"
             }           
         }
-    stage("Terraform Plan"){
+        stage("Terraform Plan"){
             steps{
                 echo "========executing terraform plan========"
                 sh "terraform plan -out=tfplan"
             }           
         }   
-    stage("Terraform Apply"){
+        stage("Terraform Apply"){
             steps{
                 echo "========executing terraform apply========"
                 //sh "terraform apply -auto-approve tfplan"
             }           
         }
+    }
 }
