@@ -46,7 +46,7 @@ pipeline{
         stage("Terraform Plan"){
             steps{
                 echo "========executing terraform plan========"
-                sh "terraform plan -out=tfplan"
+                sh "terraform plan -var-file=env/${environment}.tfvars -out=tfplan"
             }           
         }   
         stage('Terraform Apply Approval') {
