@@ -2,14 +2,14 @@
 
 def environment = ""
 
-if (env.BRANCH_NAME == main) {
+if (env.BRANCH_NAME == "main") {
     environment = "pro"
 }
-else if (env.BRANCH_NAME == dev) {
+else if (env.BRANCH_NAME == "develop") {
     environment = "dev"
 } else {
     environment = "test"
-}
+}  
 
 
 
@@ -28,7 +28,7 @@ pipeline{
         stage("Terraform Init"){
             steps{
                 echo "========executing terraform init========"
-                sh "terraform init --backend-config=backend-${environment}.tfvars"
+                sh "terraform init --backend-config=env/backend-${environment}.tfvars"
             }           
         }
         stage("Terraform Format"){
