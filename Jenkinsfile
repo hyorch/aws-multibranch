@@ -1,4 +1,18 @@
 // Execute Terraform Format
+
+def environment = ""
+
+if (env.BRANCH_NAME == main) {
+    environment = "pro"
+}
+else if (env.BRANCH_NAME == dev) {
+    environment = "dev"
+} else {
+    environment = "test"
+}
+
+
+
 pipeline{
     agent{
         label "jenkins"
@@ -8,29 +22,37 @@ pipeline{
             steps{
                 echo "========executing terraform version========"
                 sh "terraform version"
-            }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
+            }           
         }
     }
-    post{
-        always{
-            echo "========always========"
+    stage("Terraform Init"){
+            steps{
+                echo "========executing terraform init========"
+                sh "terraform init --backend-config=backend-$environment.tfvars"
+            }           
         }
-        success{
-            echo "========pipeline executed successfully ========"
+    stage("Terraform Format"){
+            steps{
+                echo "========executing terraform format========"
+                sh "terraform fmt -check"
+            }           
         }
-        failure{
-            echo "========pipeline execution failed========"
+    stage("Terraform Validate"){
+            steps{
+                echo "========executing terraform validate========"
+                sh "terraform validate"
+            }           
         }
-    }
+    stage("Terraform Plan"){
+            steps{
+                echo "========executing terraform plan========"
+                sh "terraform plan -out=tfplan"
+            }           
+        }   
+    stage("Terraform Apply"){
+            steps{
+                echo "========executing terraform apply========"
+                //sh "terraform apply -auto-approve tfplan"
+            }           
+        }
 }
